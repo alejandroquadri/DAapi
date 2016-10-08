@@ -10,7 +10,7 @@ var fs = require('fs'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
-var isProduction = true; // process.env.NODE_ENV === 'production';
+var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 var app = express();
@@ -28,10 +28,12 @@ app.use(express.static(__dirname + '/public'));
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 
 if (!isProduction) {
+  console.log('no esta en produccion', process.env);
   app.use(errorhandler());
 }
 
 if(isProduction){
+  console.log('en produccion', process.env);
   mongoose.connect(process.env.MONGODB_URI);
 } else {
   mongoose.connect('mongodb://localhost/conduit');
