@@ -38,6 +38,10 @@ if(isProduction){
   mongoose.set('debug', true);
 }
 
+// aca incluyo los modelos. Siempre tiene que ser antes de las rutas para que estas puedan usar los modelos
+require('./models/User');
+require('./config/passport');
+
 app.use(require('./routes'));
 
 /// catch 404 and forward to error handler
